@@ -1,531 +1,3041 @@
 {
-    "name": "nginx-json",
-    "description": "This content pack supports nginx sending JSON formatted log messages over syslog, allowing for arbitrary addition of fields without having to add regex extractors, as well as faster performance on the graylog side as it has reduced numbers of regexes running against the input compared with the original graylog version.\n\nIt then blanks the \"json\" field used as an intermediate step, and reduces the message field to just show the request path, reducing the storage requirements.",
-    "category": "nginx",
-    "inputs": [
-        {
-            "id": "5a4bc0be12522a5ae7bf6fb4",
-            "title": "nginx error_log",
+  "v": "1",
+  "id": "d7dc82ff-529b-488a-b1de-b12b32e756bb",
+  "rev": 4,
+  "name": "nginx_json_graylog4",
+  "summary": "Graylog 4.0+ compatible version of nginx_json content pack",
+  "description": "* Originally created by petestorey26\n* Updated by paulbarfuss for graylog3.0+\n* Updated for graylog4.0+ by the jpop\n* Added GeoIP by the jpop",
+  "vendor": "un-fuf-a-doo",
+  "url": "https://github.com/un-fuf-a-doo/graylog4-content-pack-nginx-json",
+  "parameters": [],
+  "entities": [
+    {
+      "v": "1",
+      "type": {
+        "name": "dashboard",
+        "version": "1"
+      },
+      "id": "b7c3a54b-3ed4-4b73-9452-2731a18846c8",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "NGINX Overview"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "Overview of requests handled by NGINX"
+        },
+        "widgets": [
+          {
+            "id": {
+              "@type": "string",
+              "@value": "ab3138d7-9790-4c71-a804-f59ff5692e0f"
+            },
+            "description": {
+              "@type": "string",
+              "@value": "Requests last 24h"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "STREAM_SEARCH_RESULT_COUNT"
+            },
+            "cache_time": {
+              "@type": "integer",
+              "@value": 10
+            },
+            "time_range": {
+              "type": {
+                "@type": "string",
+                "@value": "relative"
+              },
+              "range": {
+                "@type": "integer",
+                "@value": 300
+              }
+            },
             "configuration": {
-                "override_source": "",
-                "allow_override_date": true,
-                "recv_buffer_size": 1048576,
-                "port": 12302,
-                "bind_address": "0.0.0.0"
+              "timerange": {
+                "type": {
+                  "@type": "string",
+                  "@value": "relative"
+                },
+                "range": {
+                  "@type": "integer",
+                  "@value": 300
+                }
+              },
+              "lower_is_better": {
+                "@type": "boolean",
+                "@value": false
+              },
+              "stream_id": {
+                "@type": "string",
+                "@value": "3b4da8c0-e9f8-42f9-8f41-9222caa8f407"
+              },
+              "trend": {
+                "@type": "boolean",
+                "@value": false
+              },
+              "query": {
+                "@type": "string",
+                "@value": "*"
+              }
             },
-            "static_fields": {
-                "from_nginx": "true",
-                "nginx_error": "true"
-            },
-            "type": "org.graylog2.inputs.syslog.udp.SyslogUDPInput",
-            "global": true,
-            "extractors": [
+            "position": null
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "dashboard",
+        "version": "2"
+      },
+      "id": "b3109bfc-d3f9-44f9-9fd9-1764de6ea4a8",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": "This is a list of all sources that sent in messages to Graylog."
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "a1647eb6-a064-4fe6-b459-1e4267d3f659",
+              "timerange": {
+                "type": "relative",
+                "range": 300
+              },
+              "query": {
+                "type": "elasticsearch",
+                "query_string": ""
+              },
+              "search_types": [
                 {
-                    "title": "Timestamp",
-                    "type": "REGEX",
-                    "cursor_strategy": "COPY",
-                    "target_field": "timestamp",
-                    "source_field": "message",
-                    "configuration": {
-                        "regex_value": "^.*:\\s(\\d\\d\\d\\d/\\d\\d/\\d\\d\\s\\d\\d:\\d\\d:\\d\\d)\\s.*$"
-                    },
-                    "converters": [
-                        {
-                            "type": "DATE",
-                            "configuration": {
-                                "date_format": "yyyy/MM/dd HH:mm:ss "
-                            }
+                  "query": null,
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "range": 300
+                  },
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "Message count",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "time",
+                      "field": "timestamp",
+                      "interval": {
+                        "type": "auto",
+                        "scaling": 1
+                      }
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "481de18f-938e-40d5-8ab2-6eaf6a28f091",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "range": 300
+                  },
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "Message count",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "source",
+                      "limit": 15
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "011b2894-49e5-44d8-aab6-8c4d4457a886",
+                  "column_groups": [],
+                  "sort": [
+                    {
+                      "type": "series",
+                      "field": "count()",
+                      "direction": "Descending"
+                    }
+                  ]
+                },
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "range": 300
+                  },
+                  "streams": [],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "Message count",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [
+                    {
+                      "type": "values",
+                      "field": "source",
+                      "limit": 10
+                    }
+                  ],
+                  "type": "pivot",
+                  "id": "a964f1c5-e108-4b5e-a907-ffe0b0f0683c",
+                  "column_groups": [],
+                  "sort": [
+                    {
+                      "type": "series",
+                      "field": "count()",
+                      "direction": "Descending"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": "admin",
+          "created_at": "2019-11-22T10:58:47.255Z"
+        },
+        "created_at": "2019-11-22T10:54:50.950Z",
+        "requires": {},
+        "state": {
+          "a1647eb6-a064-4fe6-b459-1e4267d3f659": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "tab": {
+                "title": "Sources Overview"
+              },
+              "widget": {
+                "6c127c5d-be75-4157-b43f-ac0194ac0586": "Selected sources",
+                "92d63811-e4dd-47db-bd3b-db03c8a9bd53": "Messages per Source",
+                "00637e63-d728-4b3e-932b-7c8696b4855d": "Messages over time"
+              }
+            },
+            "widgets": [
+              {
+                "id": "6c127c5d-be75-4157-b43f-ac0194ac0586",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "range": 300
+                },
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "table",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "source",
+                      "type": "values",
+                      "config": {
+                        "limit": 15
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": "Message count"
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": [
+                    {
+                      "type": "series",
+                      "field": "count()",
+                      "direction": "Descending"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "92d63811-e4dd-47db-bd3b-db03c8a9bd53",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "range": 300
+                },
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "pie",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "source",
+                      "type": "values",
+                      "config": {
+                        "limit": 10
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": "Message count"
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": [
+                    {
+                      "type": "series",
+                      "field": "count()",
+                      "direction": "Descending"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "00637e63-d728-4b3e-932b-7c8696b4855d",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "range": 300
+                },
+                "query": null,
+                "streams": [],
+                "config": {
+                  "visualization": "line",
+                  "event_annotation": false,
+                  "row_pivots": [
+                    {
+                      "field": "timestamp",
+                      "type": "time",
+                      "config": {
+                        "interval": {
+                          "type": "auto",
+                          "scaling": null
                         }
-                    ],
-                    "condition_type": "NONE",
-                    "condition_value": "",
-                    "order": 0
-                },
-                {
-                    "title": "server",
-                    "type": "REGEX",
-                    "cursor_strategy": "COPY",
-                    "target_field": "server",
-                    "source_field": "message",
-                    "configuration": {
-                        "regex_value": "server:\\s(.+?)(,|$)"
-                    },
-                    "converters": [],
-                    "condition_type": "STRING",
-                    "condition_value": "server",
-                    "order": 0
-                },
-                {
-                    "title": "remote_addr/client",
-                    "type": "REGEX",
-                    "cursor_strategy": "COPY",
-                    "target_field": "remote_addr",
-                    "source_field": "message",
-                    "configuration": {
-                        "regex_value": "client:\\s(.+?)(,|$)"
-                    },
-                    "converters": [],
-                    "condition_type": "STRING",
-                    "condition_value": "client",
-                    "order": 0
-                },
-                {
-                    "title": "host",
-                    "type": "REGEX",
-                    "cursor_strategy": "COPY",
-                    "target_field": "host",
-                    "source_field": "message",
-                    "configuration": {
-                        "regex_value": "host:\\s\"(.+?)\"(,|$)"
-                    },
-                    "converters": [],
-                    "condition_type": "STRING",
-                    "condition_value": "host",
-                    "order": 0
-                },
-                {
-                    "title": "request_path/request",
-                    "type": "REGEX",
-                    "cursor_strategy": "COPY",
-                    "target_field": "request_path",
-                    "source_field": "message",
-                    "configuration": {
-                        "regex_value": "request:\\s\"(.+?)\"(,|$)"
-                    },
-                    "converters": [],
-                    "condition_type": "STRING",
-                    "condition_value": "request",
-                    "order": 0
-                },
-                {
-                    "title": "request_verb",
-                    "type": "REGEX",
-                    "cursor_strategy": "COPY",
-                    "target_field": "request_verb",
-                    "source_field": "message",
-                    "configuration": {
-                        "regex_value": "request:\\s\"(GET|HEAD|POST|PUT|DELETE|TRACE|OPTIONS|CONNECT|PATCH).+\"(,|$)"
-                    },
-                    "converters": [],
-                    "condition_type": "STRING",
-                    "condition_value": "request",
-                    "order": 0
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "config": {
+                        "name": "Message count"
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": null,
+                  "formatting_settings": null,
+                  "sort": []
                 }
-            ]
+              }
+            ],
+            "widget_mapping": {
+              "6c127c5d-be75-4157-b43f-ac0194ac0586": [
+                "011b2894-49e5-44d8-aab6-8c4d4457a886"
+              ],
+              "92d63811-e4dd-47db-bd3b-db03c8a9bd53": [
+                "a964f1c5-e108-4b5e-a907-ffe0b0f0683c"
+              ],
+              "00637e63-d728-4b3e-932b-7c8696b4855d": [
+                "481de18f-938e-40d5-8ab2-6eaf6a28f091"
+              ]
+            },
+            "positions": {
+              "6c127c5d-be75-4157-b43f-ac0194ac0586": {
+                "col": 1,
+                "row": 5,
+                "height": 4,
+                "width": 6
+              },
+              "92d63811-e4dd-47db-bd3b-db03c8a9bd53": {
+                "col": 7,
+                "row": 5,
+                "height": 4,
+                "width": 6
+              },
+              "00637e63-d728-4b3e-932b-7c8696b4855d": {
+                "col": 1,
+                "row": 1,
+                "height": 4,
+                "width": "Infinity"
+              }
+            },
+            "formatting": {
+              "highlighting": []
+            },
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
         },
+        "properties": [],
+        "owner": "admin",
+        "title": {
+          "@type": "string",
+          "@value": "Sources"
+        },
+        "type": "DASHBOARD",
+        "description": {
+          "@type": "string",
+          "@value": "This is a list of all sources that sent in messages to Graylog. You can narrow the timerange by zooming in on the message histogram, or you can increase the time range by specifying a broader one in the controls at the top. You can also specify filters to limit the results you are seeing. You can also add additional widgets to this dashboard, or adapt the appearance of existing widgets to suit your needs."
+        }
+      },
+      "constraints": [
         {
-            "id": "5a4bc0be12522a5ae7bf6fb3",
-            "title": "nginx access_log",
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "dashboard",
+        "version": "2"
+      },
+      "id": "1ddbd4ed-16e8-4465-9477-a14a05aa6fdc",
+      "data": {
+        "summary": {
+          "@type": "string",
+          "@value": "Converted Dashboard"
+        },
+        "search": {
+          "queries": [
+            {
+              "id": "61a42fd4-f062-4588-a557-b27ec0828b8c",
+              "timerange": {
+                "type": "relative",
+                "range": 300
+              },
+              "query": {
+                "type": "elasticsearch",
+                "query_string": ""
+              },
+              "search_types": [
+                {
+                  "query": null,
+                  "name": "chart",
+                  "timerange": {
+                    "type": "relative",
+                    "range": 300
+                  },
+                  "streams": [
+                    "a838ef7c-34a9-44f5-bd18-785c0ceec66f"
+                  ],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [],
+                  "type": "pivot",
+                  "id": "2d3f194a-3168-46db-875a-7b34454f7408",
+                  "column_groups": [],
+                  "sort": []
+                },
+                {
+                  "query": null,
+                  "name": "trend",
+                  "timerange": {
+                    "type": "offset",
+                    "source": "search_type",
+                    "id": "2d3f194a-3168-46db-875a-7b34454f7408",
+                    "offset": "1i"
+                  },
+                  "streams": [
+                    "a838ef7c-34a9-44f5-bd18-785c0ceec66f"
+                  ],
+                  "series": [
+                    {
+                      "type": "count",
+                      "id": "count()",
+                      "field": null
+                    }
+                  ],
+                  "filter": null,
+                  "rollup": true,
+                  "row_groups": [],
+                  "type": "pivot",
+                  "id": "27118fae-bc0a-4145-8b45-08a6f81fbe7d",
+                  "column_groups": [],
+                  "sort": []
+                }
+              ]
+            }
+          ],
+          "parameters": [],
+          "requires": {},
+          "owner": null,
+          "created_at": "2021-06-10T01:01:36.058Z"
+        },
+        "created_at": "2021-06-10T01:01:36.058Z",
+        "requires": {},
+        "state": {
+          "61a42fd4-f062-4588-a557-b27ec0828b8c": {
+            "selected_fields": null,
+            "static_message_list_id": null,
+            "titles": {
+              "widget": {
+                "f1aec7bc-7ff7-4da4-bb8e-c66419dc5351": "Requests last 24h"
+              }
+            },
+            "widgets": [
+              {
+                "id": "f1aec7bc-7ff7-4da4-bb8e-c66419dc5351",
+                "type": "aggregation",
+                "filter": null,
+                "timerange": {
+                  "type": "relative",
+                  "range": 300
+                },
+                "query": null,
+                "streams": [
+                  "a838ef7c-34a9-44f5-bd18-785c0ceec66f"
+                ],
+                "config": {
+                  "visualization": "numeric",
+                  "event_annotation": false,
+                  "row_pivots": [],
+                  "series": [
+                    {
+                      "config": {
+                        "name": null
+                      },
+                      "function": "count()"
+                    }
+                  ],
+                  "rollup": true,
+                  "column_pivots": [],
+                  "visualization_config": {
+                    "trend": false,
+                    "trend_preference": "HIGHER"
+                  },
+                  "formatting_settings": null,
+                  "sort": []
+                }
+              }
+            ],
+            "widget_mapping": {
+              "f1aec7bc-7ff7-4da4-bb8e-c66419dc5351": [
+                "27118fae-bc0a-4145-8b45-08a6f81fbe7d",
+                "2d3f194a-3168-46db-875a-7b34454f7408"
+              ]
+            },
+            "positions": {},
+            "formatting": null,
+            "display_mode_settings": {
+              "positions": {}
+            }
+          }
+        },
+        "properties": [],
+        "owner": null,
+        "title": {
+          "@type": "string",
+          "@value": "NGINX Overview"
+        },
+        "type": "DASHBOARD",
+        "description": {
+          "@type": "string",
+          "@value": "Overview of requests handled by NGINX"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "fa2ca431-c30d-455d-98b0-9ee703760760",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "nginx access log"
+        },
+        "configuration": {
+          "expand_structured_data": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 12304
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 4
+          },
+          "force_rdns": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "allow_override_date": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "store_full_message": {
+            "@type": "boolean",
+            "@value": false
+          }
+        },
+        "static_fields": {
+          "from_nginx": {
+            "@type": "string",
+            "@value": "true"
+          },
+          "nginx_access": {
+            "@type": "string",
+            "@value": "true"
+          }
+        },
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.syslog.udp.SyslogUDPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": [
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "json"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 2
+            },
+            "converters": [],
             "configuration": {
-                "expand_structured_data": true,
-                "recv_buffer_size": 1048576,
-                "port": 12301,
-                "override_source": "",
-                "force_rdns": false,
-                "allow_override_date": true,
-                "bind_address": "0.0.0.0",
-                "store_full_message": false
+              "replacement": {
+                "@type": "string",
+                "@value": "-"
+              },
+              "regex": {
+                "@type": "string",
+                "@value": ".*"
+              }
             },
-            "static_fields": {
-                "from_nginx": "true",
-                "nginx_access": "true"
+            "source_field": {
+              "@type": "string",
+              "@value": "json"
             },
-            "type": "org.graylog2.inputs.syslog.udp.SyslogUDPInput",
-            "global": true,
-            "extractors": [
-                {
-                    "title": "Get JSON from syslog message",
-                    "type": "REGEX",
-                    "cursor_strategy": "COPY",
-                    "target_field": "json",
-                    "source_field": "message",
-                    "configuration": {
-                        "regex_value": "nginx:\\s+(.*)"
-                    },
-                    "converters": [],
-                    "condition_type": "NONE",
-                    "condition_value": "",
-                    "order": 0
-                },
-                {
-                    "title": "Extract JSON fields",
-                    "type": "JSON",
-                    "cursor_strategy": "COPY",
-                    "target_field": "",
-                    "source_field": "json",
-                    "configuration": {
-                        "flatten": true,
-                        "list_separator": ", ",
-                        "kv_separator": "=",
-                        "key_prefix": "",
-                        "key_separator": "_",
-                        "replace_key_whitespace": false,
-                        "key_whitespace_replacement": "_"
-                    },
-                    "converters": [],
-                    "condition_type": "NONE",
-                    "condition_value": "",
-                    "order": 1
-                },
-                {
-                    "title": "Empty JSON field",
-                    "type": "REGEX_REPLACE",
-                    "cursor_strategy": "COPY",
-                    "target_field": "json",
-                    "source_field": "json",
-                    "configuration": {
-                        "replacement": "-",
-                        "regex": ".*"
-                    },
-                    "converters": [],
-                    "condition_type": "NONE",
-                    "condition_value": "",
-                    "order": 2
-                },
-                {
-                    "title": "Reduced message to path",
-                    "type": "REGEX_REPLACE",
-                    "cursor_strategy": "COPY",
-                    "target_field": "message",
-                    "source_field": "message",
-                    "configuration": {
-                        "replacement": "$1",
-                        "regex": ".*request\": \"(.*?)\".*"
-                    },
-                    "converters": [],
-                    "condition_type": "NONE",
-                    "condition_value": "",
-                    "order": 3
-                }
-            ]
+            "title": {
+              "@type": "string",
+              "@value": "Empty JSON field"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX_REPLACE"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": ""
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 1
+            },
+            "converters": [],
+            "configuration": {
+              "flatten": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "list_separator": {
+                "@type": "string",
+                "@value": ", "
+              },
+              "kv_separator": {
+                "@type": "string",
+                "@value": "="
+              },
+              "key_prefix": {
+                "@type": "string",
+                "@value": ""
+              },
+              "key_separator": {
+                "@type": "string",
+                "@value": "_"
+              },
+              "replace_key_whitespace": {
+                "@type": "boolean",
+                "@value": false
+              },
+              "key_whitespace_replacement": {
+                "@type": "string",
+                "@value": "_"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "json"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Extract JSON fields"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "JSON"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "json"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 0
+            },
+            "converters": [],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "nginx:\\s+(.*)"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Get JSON from syslog message"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 3
+            },
+            "converters": [],
+            "configuration": {
+              "replacement": {
+                "@type": "string",
+                "@value": "$1"
+              },
+              "regex": {
+                "@type": "string",
+                "@value": ".*request\": \"(.*?)\".*"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Reduced message to path"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX_REPLACE"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
         }
-    ],
-    "streams": [
-        {
-            "id": "547b2a2dd4c6c10b4f1b93ce",
-            "title": "nginx HTTP 404s",
-            "description": "All requests that were answered with a HTTP 404 by nginx",
-            "disabled": false,
-            "matching_type": "AND",
-            "stream_rules": [
-                {
-                    "type": "EXACT",
-                    "field": "from_nginx",
-                    "value": "true",
-                    "inverted": false,
-                    "description": ""
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "540d1628-ceed-49d4-8960-068c5afaa993",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "nginx error log"
+        },
+        "configuration": {
+          "expand_structured_data": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 12305
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 4
+          },
+          "force_rdns": {
+            "@type": "boolean",
+            "@value": false
+          },
+          "allow_override_date": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "store_full_message": {
+            "@type": "boolean",
+            "@value": false
+          }
+        },
+        "static_fields": {
+          "nginx_error": {
+            "@type": "string",
+            "@value": "true"
+          },
+          "from_nginx": {
+            "@type": "string",
+            "@value": "true"
+          }
+        },
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.syslog.udp.SyslogUDPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": [
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "server"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "server"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 1
+            },
+            "converters": [],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "server:\\s(.+?)(,|$)"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "server"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "timestamp"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 0
+            },
+            "converters": [
+              {
+                "type": {
+                  "@type": "string",
+                  "@value": "DATE"
                 },
-                {
-                    "type": "EXACT",
-                    "field": "response_status",
-                    "value": "404",
-                    "inverted": false,
-                    "description": ""
+                "configuration": {
+                  "date_format": {
+                    "@type": "string",
+                    "@value": "yyyy/MM/dd HH:mm:ss "
+                  }
                 }
+              }
             ],
-            "outputs": [],
-            "default_stream": false
-        },
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "^.*:\\s(\\d\\d\\d\\d/\\d\\d/\\d\\d\\s\\d\\d:\\d\\d:\\d\\d)\\s.*$"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Timestamp"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "remote_addr"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "client"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 2
+            },
+            "converters": [],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "client:\\s(.+?)(,|$)"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "remote_addr/client"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "host"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "host"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 3
+            },
+            "converters": [],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "host:\\s\"(.+?)\"(,|$)"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "host"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "request_verb"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "request"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 5
+            },
+            "converters": [],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "request:\\s\"(GET|HEAD|POST|PUT|DELETE|TRACE|OPTIONS|CONNECT|PATCH).+\"(,|$)"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "request_verb"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "request_path"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "request"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 4
+            },
+            "converters": [],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "request:\\s\"(.+?)\"(,|$)"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "request_path/request"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
+          }
+        ]
+      },
+      "constraints": [
         {
-            "id": "5445733cd4c6d7d480b5f48b",
-            "title": "nginx errors",
-            "description": "All requests that were logged into the nginx error_log",
-            "disabled": false,
-            "matching_type": "AND",
-            "stream_rules": [
-                {
-                    "type": "EXACT",
-                    "field": "nginx_error",
-                    "value": "true",
-                    "inverted": false,
-                    "description": ""
-                }
-            ],
-            "outputs": [],
-            "default_stream": false
-        },
-        {
-            "id": "5445736fd4c6d7d480b5f4c2",
-            "title": "nginx requests",
-            "description": "All requests that were logged into the nginx access_log",
-            "disabled": false,
-            "matching_type": "AND",
-            "stream_rules": [
-                {
-                    "type": "EXACT",
-                    "field": "nginx_access",
-                    "value": "true",
-                    "inverted": false,
-                    "description": ""
-                }
-            ],
-            "outputs": [],
-            "default_stream": false
-        },
-        {
-            "id": "547b2a77d4c6c10b4f1b941f",
-            "title": "nginx HTTP 5XXs",
-            "description": "All requests that were answered with a HTTP code in the 500 range by nginx",
-            "disabled": false,
-            "matching_type": "AND",
-            "stream_rules": [
-                {
-                    "type": "EXACT",
-                    "field": "from_nginx",
-                    "value": "true",
-                    "inverted": false,
-                    "description": ""
-                },
-                {
-                    "type": "GREATER",
-                    "field": "response_status",
-                    "value": "499",
-                    "inverted": false,
-                    "description": ""
-                }
-            ],
-            "outputs": [],
-            "default_stream": false
-        },
-        {
-            "id": "547b2ad4d4c6c10b4f1b9485",
-            "title": "nginx HTTP 4XXs",
-            "description": "All requests that were answered with a HTTP code in the 400 range by nginx",
-            "disabled": false,
-            "matching_type": "AND",
-            "stream_rules": [
-                {
-                    "type": "EXACT",
-                    "field": "from_nginx",
-                    "value": "true",
-                    "inverted": false,
-                    "description": ""
-                },
-                {
-                    "type": "GREATER",
-                    "field": "response_status",
-                    "value": "399",
-                    "inverted": false,
-                    "description": ""
-                },
-                {
-                    "type": "SMALLER",
-                    "field": "response_status",
-                    "value": "500",
-                    "inverted": false,
-                    "description": ""
-                }
-            ],
-            "outputs": [],
-            "default_stream": false
-        },
-        {
-            "id": "547b29b6d4c6c10b4f1b934d",
-            "title": "nginx",
-            "description": "All requests that were logged into the nginx access_log or nginx_error_log",
-            "disabled": false,
-            "matching_type": "AND",
-            "stream_rules": [
-                {
-                    "type": "EXACT",
-                    "field": "from_nginx",
-                    "value": "true",
-                    "inverted": false,
-                    "description": ""
-                }
-            ],
-            "outputs": [],
-            "default_stream": false
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
         }
-    ],
-    "outputs": [],
-    "dashboards": [
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "ba51fefc-bbc5-40de-9b51-25ea1c1734bc",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "nginx access log"
+        },
+        "configuration": {
+          "expand_structured_data": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 12304
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 4
+          },
+          "force_rdns": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "allow_override_date": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "store_full_message": {
+            "@type": "boolean",
+            "@value": true
+          }
+        },
+        "static_fields": {
+          "from_nginx": {
+            "@type": "string",
+            "@value": "true"
+          },
+          "nginx_access": {
+            "@type": "string",
+            "@value": "true"
+          }
+        },
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.syslog.udp.SyslogUDPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": [
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "json"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 0
+            },
+            "converters": [],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "nginx:\\s+(.*)"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Get JSON from syslog message"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": ""
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 1
+            },
+            "converters": [],
+            "configuration": {
+              "flatten": {
+                "@type": "boolean",
+                "@value": true
+              },
+              "list_separator": {
+                "@type": "string",
+                "@value": ", "
+              },
+              "kv_separator": {
+                "@type": "string",
+                "@value": "="
+              },
+              "key_prefix": {
+                "@type": "string",
+                "@value": ""
+              },
+              "key_separator": {
+                "@type": "string",
+                "@value": "_"
+              },
+              "replace_key_whitespace": {
+                "@type": "boolean",
+                "@value": false
+              },
+              "key_whitespace_replacement": {
+                "@type": "string",
+                "@value": "_"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "json"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Extract JSON fields"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "JSON"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "json"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 2
+            },
+            "converters": [],
+            "configuration": {
+              "replacement": {
+                "@type": "string",
+                "@value": "-"
+              },
+              "regex": {
+                "@type": "string",
+                "@value": ".*"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "json"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Empty JSON field"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX_REPLACE"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 3
+            },
+            "converters": [],
+            "configuration": {
+              "replacement": {
+                "@type": "string",
+                "@value": "$1"
+              },
+              "regex": {
+                "@type": "string",
+                "@value": ".*request\": \"(.*?)\".*"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Reduced message to path"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX_REPLACE"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          }
+        ]
+      },
+      "constraints": [
         {
-            "title": "nginx overview",
-            "description": "Overview of requests handled by nginx",
-            "dashboard_widgets": [
-                {
-                    "description": "Response codes last hour",
-                    "type": "QUICKVALUES",
-                    "cache_time": 10,
-                    "configuration": {
-                        "timerange": {
-                            "type": "relative",
-                            "range": 3600
-                        },
-                        "field": "response_status",
-                        "stream_id": "5445736fd4c6d7d480b5f4c2",
-                        "query": "*"
-                    },
-                    "col": 3,
-                    "row": 4,
-                    "height": 3,
-                    "width": 1
-                },
-                {
-                    "description": "Response codes last 24h",
-                    "type": "QUICKVALUES",
-                    "cache_time": 10,
-                    "configuration": {
-                        "timerange": {
-                            "type": "relative",
-                            "range": 86400
-                        },
-                        "field": "response_status",
-                        "stream_id": "5445736fd4c6d7d480b5f4c2",
-                        "query": "*"
-                    },
-                    "col": 2,
-                    "row": 4,
-                    "height": 3,
-                    "width": 1
-                },
-                {
-                    "description": "Requests last 24h",
-                    "type": "SEARCH_RESULT_CHART",
-                    "cache_time": 10,
-                    "configuration": {
-                        "interval": "minute",
-                        "timerange": {
-                            "type": "relative",
-                            "range": 86400
-                        },
-                        "stream_id": "5445736fd4c6d7d480b5f4c2",
-                        "query": "*"
-                    },
-                    "col": 2,
-                    "row": 1,
-                    "height": 1,
-                    "width": 2
-                },
-                {
-                    "description": "Requests last 24h",
-                    "type": "STREAM_SEARCH_RESULT_COUNT",
-                    "cache_time": 10,
-                    "configuration": {
-                        "timerange": {
-                            "type": "relative",
-                            "range": 86400
-                        },
-                        "stream_id": "5445736fd4c6d7d480b5f4c2",
-                        "query": "*"
-                    },
-                    "col": 1,
-                    "row": 1,
-                    "height": 1,
-                    "width": 1
-                },
-                {
-                    "description": "HTTP versions last 24h",
-                    "type": "QUICKVALUES",
-                    "cache_time": 300,
-                    "configuration": {
-                        "timerange": {
-                            "type": "relative",
-                            "range": 86400
-                        },
-                        "field": "http_version",
-                        "stream_id": "5445736fd4c6d7d480b5f4c2",
-                        "query": "*"
-                    },
-                    "col": 1,
-                    "row": 4,
-                    "height": 3,
-                    "width": 1
-                },
-                {
-                    "description": "HTTP 5XXs last 24h",
-                    "type": "STREAM_SEARCH_RESULT_COUNT",
-                    "cache_time": 10,
-                    "configuration": {
-                        "timerange": {
-                            "type": "relative",
-                            "range": 86400
-                        },
-                        "stream_id": "547b2a77d4c6c10b4f1b941f",
-                        "query": "*"
-                    },
-                    "col": 1,
-                    "row": 3,
-                    "height": 1,
-                    "width": 1
-                },
-                {
-                    "description": "HTTP 4XXs last 24h",
-                    "type": "STREAM_SEARCH_RESULT_COUNT",
-                    "cache_time": 10,
-                    "configuration": {
-                        "timerange": {
-                            "type": "relative",
-                            "range": 86400
-                        },
-                        "stream_id": "547b2ad4d4c6c10b4f1b9485",
-                        "query": "*"
-                    },
-                    "col": 1,
-                    "row": 2,
-                    "height": 1,
-                    "width": 1
-                },
-                {
-                    "description": "HTTP 4XXs last 24h",
-                    "type": "SEARCH_RESULT_CHART",
-                    "cache_time": 10,
-                    "configuration": {
-                        "interval": "minute",
-                        "timerange": {
-                            "type": "relative",
-                            "range": 86400
-                        },
-                        "stream_id": "547b2ad4d4c6c10b4f1b9485",
-                        "query": "*"
-                    },
-                    "col": 2,
-                    "row": 2,
-                    "height": 1,
-                    "width": 2
-                },
-                {
-                    "description": "HTTP 5XXs last 24h",
-                    "type": "SEARCH_RESULT_CHART",
-                    "cache_time": 10,
-                    "configuration": {
-                        "interval": "minute",
-                        "timerange": {
-                            "type": "relative",
-                            "range": 86400
-                        },
-                        "stream_id": "547b2a77d4c6c10b4f1b941f",
-                        "query": "*"
-                    },
-                    "col": 2,
-                    "row": 3,
-                    "height": 1,
-                    "width": 2
-                },
-                {
-                    "description": "Map of requests",
-                    "type": "org.graylog.plugins.map.widget.strategy.MapWidgetStrategy",
-                    "cache_time": 10,
-                    "configuration": {
-                        "timerange": {
-                            "type": "relative",
-                            "range": 300
-                        },
-                        "field": "remote_addr_geolocation",
-                        "stream_id": "547b29b6d4c6c10b4f1b934d",
-                        "query": ""
-                    },
-                    "col": 4,
-                    "row": 2,
-                    "height": 2,
-                    "width": 2
-                }
-            ]
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
         }
-    ],
-    "grok_patterns": [],
-    "lookup_tables": [],
-    "lookup_caches": [],
-    "lookup_data_adapters": []
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "input",
+        "version": "1"
+      },
+      "id": "23152451-78d7-4787-a0d2-fe53218a4914",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "nginx error log"
+        },
+        "configuration": {
+          "expand_structured_data": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "recv_buffer_size": {
+            "@type": "integer",
+            "@value": 1048576
+          },
+          "port": {
+            "@type": "integer",
+            "@value": 12305
+          },
+          "number_worker_threads": {
+            "@type": "integer",
+            "@value": 4
+          },
+          "force_rdns": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "allow_override_date": {
+            "@type": "boolean",
+            "@value": true
+          },
+          "bind_address": {
+            "@type": "string",
+            "@value": "0.0.0.0"
+          },
+          "store_full_message": {
+            "@type": "boolean",
+            "@value": true
+          }
+        },
+        "static_fields": {
+          "nginx_error": {
+            "@type": "string",
+            "@value": "true"
+          },
+          "from_nginx": {
+            "@type": "string",
+            "@value": "true"
+          }
+        },
+        "type": {
+          "@type": "string",
+          "@value": "org.graylog2.inputs.syslog.udp.SyslogUDPInput"
+        },
+        "global": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "extractors": [
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "server"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "server"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 1
+            },
+            "converters": [],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "server:\\s(.+?)(,|$)"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "server"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "timestamp"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": ""
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 0
+            },
+            "converters": [
+              {
+                "type": {
+                  "@type": "string",
+                  "@value": "DATE"
+                },
+                "configuration": {
+                  "date_format": {
+                    "@type": "string",
+                    "@value": "yyyy/MM/dd HH:mm:ss "
+                  }
+                }
+              }
+            ],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "^.*:\\s(\\d\\d\\d\\d/\\d\\d/\\d\\d\\s\\d\\d:\\d\\d:\\d\\d)\\s.*$"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "Timestamp"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "NONE"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "remote_addr"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "client"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 2
+            },
+            "converters": [],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "client:\\s(.+?)(,|$)"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "remote_addr/client"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "host"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "host"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 3
+            },
+            "converters": [],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "host:\\s\"(.+?)\"(,|$)"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "host"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "request_verb"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "request"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 5
+            },
+            "converters": [],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "request:\\s\"(GET|HEAD|POST|PUT|DELETE|TRACE|OPTIONS|CONNECT|PATCH).+\"(,|$)"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "request_verb"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": "request_path"
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "request"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 4
+            },
+            "converters": [],
+            "configuration": {
+              "regex_value": {
+                "@type": "string",
+                "@value": "request:\\s\"(.+?)\"(,|$)"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "request_path/request"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "REGEX"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_adapter",
+        "version": "1"
+      },
+      "id": "c76a30e1-73e5-45d9-a34f-a137d1f9704e",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "geoip-adapter"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "GeoIP"
+        },
+        "description": {
+          "@type": "string",
+          "@value": " GeoIP Lookup Tables"
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "maxmind_geoip"
+          },
+          "path": {
+            "@type": "string",
+            "@value": "/etc/geoip/GeoLite2-City.mmdb"
+          },
+          "database_type": {
+            "@type": "string",
+            "@value": "MAXMIND_CITY"
+          },
+          "check_interval": {
+            "@type": "long",
+            "@value": 1
+          },
+          "check_interval_unit": {
+            "@type": "string",
+            "@value": "MINUTES"
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_cache",
+        "version": "1"
+      },
+      "id": "e1eb7f44-3b0e-43d8-9697-a7cbd2b4679a",
+      "data": {
+        "name": {
+          "@type": "string",
+          "@value": "geoip-cache"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "GeoIP"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "GeoIP Cache"
+        },
+        "configuration": {
+          "type": {
+            "@type": "string",
+            "@value": "guava_cache"
+          },
+          "max_size": {
+            "@type": "integer",
+            "@value": 1000
+          },
+          "expire_after_access": {
+            "@type": "long",
+            "@value": 1
+          },
+          "expire_after_access_unit": {
+            "@type": "string",
+            "@value": "HOURS"
+          },
+          "expire_after_write": {
+            "@type": "long",
+            "@value": 0
+          }
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "lookup_table",
+        "version": "1"
+      },
+      "id": "e20d66de-0f25-43ba-9a3a-cf966f3a4b4c",
+      "data": {
+        "default_single_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "cache_name": {
+          "@type": "string",
+          "@value": "e1eb7f44-3b0e-43d8-9697-a7cbd2b4679a"
+        },
+        "name": {
+          "@type": "string",
+          "@value": "geoip-lookup"
+        },
+        "default_multi_value_type": {
+          "@type": "string",
+          "@value": "NULL"
+        },
+        "default_multi_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "data_adapter_name": {
+          "@type": "string",
+          "@value": "c76a30e1-73e5-45d9-a34f-a137d1f9704e"
+        },
+        "title": {
+          "@type": "string",
+          "@value": "GeoIP"
+        },
+        "default_single_value": {
+          "@type": "string",
+          "@value": ""
+        },
+        "description": {
+          "@type": "string",
+          "@value": "GeoIP Lookup"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "61335e36-fa4d-4e97-9e2e-a7744b38c998",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "GeoIP Pipeline"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "GeoIP Pipeline"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"GeoIP Pipeline\"\nstage 0 match all\nrule \"remote_addr geoip lookup\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "000000000000000000000001"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline_rule",
+        "version": "1"
+      },
+      "id": "1d58bbeb-c24e-4ae3-9649-8e3d5a3cd572",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "remote_addr geoip lookup"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "GeoIP Source Rule"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"remote_addr geoip lookup\"\nwhen\n  has_field(\"remote_addr\")\nthen\n  let geo = lookup(\"geoip-lookup\", to_string(\"remote_addr\"));\n  set_field(\"remote_addr_geo_location\", geo[\"coordinates\"]);\n  set_field(\"remote_add_geo_country_code\", geo[\"country\"].iso_code);\n  set_field(\"remote_addr_geo_country_name\", geo[\"country\"].names.en);\n  set_field(\"remote_addr_geo_city_name\", geo[\"city\"].names.en);\nend"
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "3b4da8c0-e9f8-42f9-8f41-9222caa8f407",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "nginx"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "from_nginx"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "all message to nginx_access and nginx_error"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "40645de4-746e-4ec0-86ec-47d893ded9b6",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "nginx HTTP 4XXs"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "GREATER"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "response_status"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "399"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "SMALLER"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "response_status"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "500"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "from_nginx"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were answered with a HTTP code in the 400 range by nginx"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "be3273d1-ff76-4ab5-8471-f7f2c3a8593e",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "nginx HTTP 5XXs"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "GREATER"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "response_status"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "499"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "SMALLER"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "response_status"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "600"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "from_nginx"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were answered with a HTTP code in the 500 range by nginx"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "6bfbdd7e-638a-4ff5-a3e0-327a21bad701",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "nginx HTTP 404s"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "response_status"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "404"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "from_nginx"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were answered with a HTTP 404 by nginx"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "1a3bec0f-34e6-41dc-9d38-fb0997fef588",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "nginx errors"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "nginx_error"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were logged into the nginx error_log"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "5a0abcb1-b5af-4239-96f6-d8fc786c54be",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "nginx requests"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "nginx_access"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were logged into the nginx access_log"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.0.0+db6cf59"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "a838ef7c-34a9-44f5-bd18-785c0ceec66f",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": true
+        },
+        "title": {
+          "@type": "string",
+          "@value": "nginx"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "from_nginx"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "all message to nginx_access and nginx_error"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "b02e1991-3286-487a-ba70-fc09531e112a",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "nginx requests"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "nginx_access"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were logged into the nginx access_log"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "136f2ab8-9de2-482d-a54c-03b04456db7d",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "nginx HTTP 5XXs"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "from_nginx"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "SMALLER"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "response_status"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "600"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "GREATER"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "response_status"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "499"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were answered with a HTTP code in the 500 range by nginx"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "75247ae6-ae5d-4505-ac65-04805e199b5f",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "nginx errors"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "nginx_error"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were logged into the nginx error_log"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "1ef344d5-3749-4c2d-a59d-3b09e6ac437f",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "nginx HTTP 404s"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "from_nginx"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "response_status"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "404"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were answered with a HTTP 404 by nginx"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "stream",
+        "version": "1"
+      },
+      "id": "93231916-46a5-42df-b35c-1b40b84d548c",
+      "data": {
+        "alarm_callbacks": [],
+        "outputs": [],
+        "remove_matches": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "title": {
+          "@type": "string",
+          "@value": "nginx HTTP 4XXs"
+        },
+        "stream_rules": [
+          {
+            "type": {
+              "@type": "string",
+              "@value": "SMALLER"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "response_status"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "500"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "EXACT"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "from_nginx"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "true"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          },
+          {
+            "type": {
+              "@type": "string",
+              "@value": "GREATER"
+            },
+            "field": {
+              "@type": "string",
+              "@value": "response_status"
+            },
+            "value": {
+              "@type": "string",
+              "@value": "399"
+            },
+            "inverted": {
+              "@type": "boolean",
+              "@value": false
+            },
+            "description": {
+              "@type": "string",
+              "@value": ""
+            }
+          }
+        ],
+        "alert_conditions": [],
+        "matching_type": {
+          "@type": "string",
+          "@value": "AND"
+        },
+        "disabled": {
+          "@type": "boolean",
+          "@value": false
+        },
+        "description": {
+          "@type": "string",
+          "@value": "All requests that were answered with a HTTP code in the 400 range by nginx"
+        },
+        "default_stream": {
+          "@type": "boolean",
+          "@value": false
+        }
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=4.0.8+6b8c55d"
+        }
+      ]
+    }
+  ]
 }
